@@ -1,9 +1,12 @@
-import React from 'react'
+import Wrapper from "@/container/Wrapper/Wrapper";
+import React from "react";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <>
+      <Wrapper />
+    </>
+  );
+};
 
-export default page
+export default page;
