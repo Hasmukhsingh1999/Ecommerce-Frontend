@@ -1,54 +1,43 @@
-"use client"
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+"use client";
+import React, { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const Sale = () => {
+  const items = ["ONE", "TWO", "THREE"];
+  const [currentItem, setCurrentItem] = useState(0);
   const containerRef = useRef(null);
 
-  const contentArray = ['ONE', 'TWO', 'THREE'];
-
   useEffect(() => {
-    const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power2.inOut' } });
+    const container = containerRef.current;
 
-    contentArray.forEach((content, index) => {
-      tl.fromTo(
-        containerRef.current.children[index],
-        { x: '100%' },
-        { x: '0%', duration: 1, delay: index * 4 }
-      );
-    });
+    const animateSlide = (index) => {
+      gsap.to(container.children, {
+        x: -index * container.clientWidth,
+        duration: 0.5,
+        ease: "power2.inOut",
+      });
+    };
 
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: 'bottom bottom',
-      animation: tl,
-      scrub: 1,
-      markers: true,
-    });
-
-    const interval = setInterval(() => {
-      tl.restart();
+    const intervalId = setInterval(() => {
+      setCurrentItem((prevItem) => (prevItem + 1) % items.length);
     }, 2000);
 
+    animateSlide(currentItem);
+
     return () => {
-      clearInterval(interval);
-      tl.kill();
+      clearInterval(intervalId);
     };
-  }, [contentArray]);
+  }, [items.length, currentItem]);
 
   return (
-    <div className='w-full bg-black h-[3rem] relative'>
-      <div className='w-full relative h-full flex items-center overflow-hidden' ref={containerRef}>
-        {contentArray.map((content, index) => (
+    <div className="bg-black h-[3rem] container overflow-hidden flex items-center justify-center">
+      <div ref={containerRef} className="flex">
+        {items.map((item, index) => (
           <div
             key={index}
-            className="bg-red-500 text-white text-center absolute w-full"
+            className={`w-full bg-red-500 text-center`}
           >
-            {content}
+            {item}
           </div>
         ))}
       </div>
@@ -57,5 +46,3 @@ const Sale = () => {
 };
 
 export default Sale;
-
-
