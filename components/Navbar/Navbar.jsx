@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import React from 'react';
 import { SearchIcon } from "@chakra-ui/icons";
 import useSticky from '@/hooks/stickyEffect';
