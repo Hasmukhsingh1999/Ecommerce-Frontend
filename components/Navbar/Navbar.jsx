@@ -1,18 +1,18 @@
 "use client";
+"use client";
 import React from 'react';
 import { SearchIcon } from "@chakra-ui/icons";
-import useSticky from "@/hooks/stickyEffect";
+import useSticky from '@/hooks/stickyEffect';
+
 
 const Navbar = () => {
   const isSticky = useSticky();
 
   return (
-    <>
+    <div style={isSticky ? { position: "sticky", top: 0, zIndex: 10 } : {}}>
       {/* Top Navbar */}
       <div
-        className={`flex w-full justify-between container bg-red-500 min-h-[70px] items-center sticky-navbar ${
-          isSticky ? "sticky top-0 z-10" : ""
-        }`}
+        className={`flex w-full justify-between container bg-red-500 min-h-[70px] items-center sticky-navbar `}
       >
         <div className="flex-1">
           <SearchIcon />
@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className={`min-h-[50px] bg-yellow-400 static`}>
         NavbarBottom
       </div>
-    </>
+    </div>
   );
 };
 
